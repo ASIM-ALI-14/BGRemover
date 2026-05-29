@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="160">
+
+    <!-- Background -->
+    <path
+        android:fillColor="#F5F5F5"
+        android:pathData="M0,0 L200,0 L200,260 L0,260 Z"/>
+
+    <!-- Basket body -->
+    <path
+        android:fillColor="#DCDCDC"
+        android:pathData="M48,90 Q40,90 40,98 L40,152 Q40,160 48,160 L152,160 Q160,160 160,152 L160,98 Q160,90 152,90 Z"/>
+
+    <!-- Basket top bar -->
+    <path
+        android:fillColor="#E5E5E5"
+        android:pathData="M60,75 Q55,75 55,80 L55,90 Q55,95 60,95 L140,95 Q145,95 145,90 L145,80 Q145,75 140,75 Z"/>
+
+    <!-- Left handle -->
+    <path
+        android:fillColor="#CFCFCF"
+        android:pathData="M63,70 Q60,70 60,73 L60,90 Q60,90 63,90 L70,90 Q70,90 70,90 L70,73 Q70,70 67,70 Z"/>
+
+    <!-- Right handle -->
+    <path
+        android:fillColor="#CFCFCF"
+        android:pathData="M133,70 Q130,70 130,73 L130,90 L137,90 L140,90 Q140,90 140,90 L140,73 Q140,70 137,70 Z"/>
+
+    <!-- Inner paper -->
+    <path
+        android:fillColor="#EEEEEE"
+        android:pathData="M69,60 Q65,60 65,64 L65,96 Q65,100 69,100 L131,100 Q135,100 135,96 L135,64 Q135,60 131,60 Z"/>
+
+    <!-- Decoration dots -->
+    <path
+        android:fillColor="#E0E0E0"
+        android:pathData="M50,46 A4,4 0 1,1 50,54 A4,4 0 1,1 50,46 Z"/>
+    <path
+        android:fillColor="#E0E0E0"
+        android:pathData="M150,46 A4,4 0 1,1 150,54 A4,4 0 1,1 150,46 Z"/>
+    <path
+        android:fillColor="#E0E0E0"
+        android:pathData="M40,117 A3,3 0 1,1 40,123 A3,3 0 1,1 40,117 Z"/>
+    <path
+        android:fillColor="#E0E0E0"
+        android:pathData="M160,117 A3,3 0 1,1 160,123 A3,3 0 1,1 160,117 Z"/>
+
+</vector>
