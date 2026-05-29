@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.devx.testapp"
+    namespace = "com.devx.BGRemover"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.devx.testapp"
+        applicationId = "com.devx.BGRemover"
         minSdk = 24
         targetSdk = 36
         versionCode = 1
