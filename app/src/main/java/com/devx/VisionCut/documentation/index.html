@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>VisionCut — Documentation</title>
+<style>
+  /* ── Tokens ──────────────────────────────────────────────── */
+  :root {
+    --brand:      #6901FC;
+    --brand-dim:  #8B33FD;
+    --brand-pale: #F3F0FE;
+    --bg:         #FAFAFA;
+    --surface:    #FFFFFF;
+    --border:     #E8E8EC;
+    --text:       #1A1A2E;
+    --muted:      #6B6B7B;
+    --code-bg:    #1A1A2E;
+    --code-text:  #E8E6F0;
+    --sidebar-w:  270px;
+    --warn:       #FFF3E0;
+    --warn-bdr:   #FF9800;
+    --note:       #E8F4FD;
+    --note-bdr:   #2196F3;
+    --ok:         #E8F5E9;
+    --ok-bdr:     #4CAF50;
+  }
+
+  /* ── Reset ───────────────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--text);
+    background: var(--bg);
+  }
+
+  /* ── Layout ──────────────────────────────────────────────── */
+  .wrapper { display: flex; min-height: 100vh; }
+
+  /* ── Sidebar ─────────────────────────────────────────────── */
+  .sidebar {
+    width: var(--sidebar-w);
+    flex-shrink: 0;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 0 0 40px;
+  }
+  .sidebar-brand {
+    padding: 24px 20px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .sidebar-brand .app-name {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--brand);
+    letter-spacing: -0.5px;
+  }
+  .sidebar-brand .version-badge {
+    display: inline-block;
+    margin-top: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--brand);
+    background: var(--brand-pale);
+    border-radius: 20px;
+    padding: 2px 10px;
+    letter-spacing: 0.3px;
+  }
+  .sidebar nav { padding: 12px 0; }
+  .nav-section {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+    padding: 16px 20px 6px;
+  }
+  .sidebar nav a {
+    display: block;
+    padding: 7px 20px 7px 28px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13.5px;
+    font-weight: 500;
+    border-left: 2px solid transparent;
+    transition: all 0.15s;
+  }
+  .sidebar nav a:hover,
+  .sidebar nav a.active {
+    color: var(--brand);
+    border-left-color: var(--brand);
+    background: var(--brand-pale);
+  }
+
+  /* ── Content ─────────────────────────────────────────────── */
+  .content {
+    flex: 1;
+    max-width: 860px;
+    padding: 48px 56px;
+    min-width: 0;
+  }
+
+  /* ── Hero ────────────────────────────────────────────────── */
+  .hero {
+    background: linear-gradient(135deg, var(--brand) 0%, #9B33FF 100%);
+    border-radius: 16px;
+    padding: 40px 40px 36px;
+    color: white;
+    margin-bottom: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    right: -30px;
+    top: -40px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.07);
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    right: 60px;
+    bottom: -60px;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+  }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    border-radius: 20px;
+    padding: 3px 14px;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .hero h1 {
+    font-size: 36px;
+    font-weight: 900;
+    letter-spacing: -1px;
+    line-height: 1.1;
+    margin-bottom: 10px;
+  }
+  .hero p {
+    font-size: 15px;
+    opacity: 0.88;
+    max-width: 480px;
+    line-height: 1.6;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 24px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+  }
+  .hero-meta span {
+    font-size: 12px;
+    font-weight: 600;
+    opacity: 0.85;
+  }
+  .hero-meta span strong { opacity: 1; }
+
+  /* ── Sections ────────────────────────────────────────────── */
+  section { margin-bottom: 56px; scroll-margin-top: 24px; }
+  h2 {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text);
+    border-bottom: 2px solid var(--brand-pale);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    letter-spacing: -0.4px;
+  }
+  h2::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 22px;
+    background: var(--brand);
+    border-radius: 2px;
+    margin-right: 10px;
+    vertical-align: -4px;
+  }
+  h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    margin: 28px 0 10px;
+  }
+  h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 20px 0 8px;
+  }
+  p { margin-bottom: 14px; color: var(--text); }
+  p:last-child { margin-bottom: 0; }
+
+  /* ── Feature grid ────────────────────────────────────────── */
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 14px;
+    margin: 20px 0;
+  }
+  .feature-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    transition: box-shadow 0.2s;
+  }
+  .feature-card:hover { box-shadow: 0 4px 16px rgba(105,1,252,0.1); }
+  .feature-icon {
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+  .feature-card h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    text-transform: none;
+    letter-spacing: 0;
+    margin: 0 0 4px;
+  }
+  .feature-card p {
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* ── Screenshots ─────────────────────────────────────────── */
+  .screenshots {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 12px;
+    margin: 20px 0;
+  }
+  .screenshot-frame {
+    background: var(--brand-pale);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    text-align: center;
+  }
+  .screenshot-frame img {
+    width: 100%;
+    display: block;
+    border-radius: 12px 12px 0 0;
+  }
+  .screenshot-frame .cap {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    padding: 6px 8px;
+  }
+  .img-placeholder {
+    width: 100%;
+    height: 260px;
+    background: linear-gradient(135deg, var(--brand-pale), #E8E0FF);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 6px;
+    color: var(--brand);
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .img-placeholder .icon { font-size: 28px; }
+
+  /* ── Code ────────────────────────────────────────────────── */
+  pre, code {
+    font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+  }
+  code {
+    background: var(--brand-pale);
+    color: var(--brand);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+  }
+  pre {
+    background: var(--code-bg);
+    color: var(--code-text);
+    border-radius: 12px;
+    padding: 20px 22px;
+    overflow-x: auto;
+    font-size: 13px;
+    line-height: 1.7;
+    margin: 14px 0;
+    position: relative;
+  }
+  pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+    font-size: inherit;
+  }
+  .pre-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #111122;
+    border-radius: 12px 12px 0 0;
+    padding: 8px 18px;
+    margin-bottom: -14px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #888;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .pre-label + pre { border-radius: 0 0 12px 12px; }
+  .kw   { color: #C792EA; }
+  .str  { color: #C3E88D; }
+  .cmt  { color: #546E7A; font-style: italic; }
+  .fn   { color: #82AAFF; }
+  .num  { color: #F78C6C; }
+  .cls  { color: #FFCB6B; }
+
+  /* ── Callout boxes ───────────────────────────────────────── */
+  .callout {
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 16px 0;
+    border-left: 4px solid;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .callout-icon { font-size: 16px; margin-right: 6px; }
+  .callout.warn  { background: var(--warn);  border-color: var(--warn-bdr); }
+  .callout.note  { background: var(--note);  border-color: var(--note-bdr); }
+  .callout.ok    { background: var(--ok);    border-color: var(--ok-bdr); }
+  .callout strong { display: block; margin-bottom: 4px; }
+
+  /* ── Steps ───────────────────────────────────────────────── */
+  .steps { counter-reset: step; list-style: none; margin: 16px 0; }
+  .steps li {
+    counter-increment: step;
+    padding: 12px 16px 12px 52px;
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+  .steps li::before {
+    content: counter(step);
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 26px;
+    height: 26px;
+    background: var(--brand);
+    color: white;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ── File tree ───────────────────────────────────────────── */
+  .file-tree {
+    background: var(--code-bg);
+    border-radius: 12px;
+    padding: 20px 22px;
+    font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    font-size: 13px;
+    line-height: 1.9;
+    color: var(--code-text);
+    margin: 14px 0;
+  }
+  .file-tree .dir  { color: #FFCB6B; }
+  .file-tree .file { color: #C3E88D; }
+  .file-tree .note { color: #546E7A; font-style: italic; }
+
+  /* ── Requirements table ──────────────────────────────────── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  th {
+    background: var(--brand-pale);
+    color: var(--brand);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    padding: 10px 14px;
+    text-align: left;
+  }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--brand-pale); }
+  tbody tr:nth-child(even) td { background: #F7F6FA; }
+  tbody tr:nth-child(even):hover td { background: var(--brand-pale); }
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 20px;
+    padding: 2px 10px;
+  }
+  .badge.required { background: #FFE8E8; color: #D32F2F; }
+  .badge.optional { background: #E8F5E9; color: #2E7D32; }
+
+  /* ── Changelog ───────────────────────────────────────────── */
+  .changelog-entry {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .changelog-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+  .changelog-version {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--brand);
+  }
+  .changelog-date {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .changelog-tag {
+    margin-left: auto;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 20px;
+    padding: 2px 10px;
+    background: var(--brand);
+    color: white;
+  }
+  .changelog-body {
+    padding: 14px 18px;
+    font-size: 14px;
+  }
+  .changelog-body ul { padding-left: 20px; }
+  .changelog-body li { margin-bottom: 4px; color: var(--muted); }
+  .changelog-body li strong { color: var(--text); }
+
+  /* ── Footer ──────────────────────────────────────────────── */
+  footer {
+    border-top: 1px solid var(--border);
+    margin-top: 56px;
+    padding-top: 28px;
+    font-size: 13px;
+    color: var(--muted);
+    text-align: center;
+  }
+  footer a { color: var(--brand); text-decoration: none; }
+
+  /* ── Responsive ──────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    .sidebar { display: none; }
+    .content { padding: 28px 22px; }
+    .hero { padding: 28px 24px; }
+    .hero h1 { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+<!-- ═══════════════════════════════════════════════════════════
+     SIDEBAR
+════════════════════════════════════════════════════════════ -->
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <div class="app-name">VisionCut</div>
+    <span class="version-badge">v1.0.0</span>
+  </div>
+  <nav>
+    <div class="nav-section">Getting Started</div>
+    <a href="#introduction">Introduction</a>
+    <a href="#whats-included">What's Included</a>
+    <a href="#requirements">Requirements</a>
+    <a href="#installation">Installation</a>
+
+    <div class="nav-section">Configuration</div>
+    <a href="#admob">AdMob Ads</a>
+    <a href="#revenuecat">RevenueCat Premium</a>
+    <a href="#fileprovider">FileProvider</a>
+    <a href="#api-key-security">API Key Security</a>
+
+    <div class="nav-section">Customization</div>
+    <a href="#theming">Colors &amp; Theme</a>
+    <a href="#typography">Typography</a>
+    <a href="#app-name">App Name &amp; Package</a>
+
+    <div class="nav-section">Architecture</div>
+    <a href="#file-structure">File Structure</a>
+    <a href="#navigation-flow">Navigation Flow</a>
+    <a href="#pipeline">Video Pipeline</a>
+
+    <div class="nav-section">Build &amp; Release</div>
+    <a href="#debug-build">Debug Build</a>
+    <a href="#release-build">Release Build</a>
+    <a href="#proguard">ProGuard Rules</a>
+
+    <div class="nav-section">Help</div>
+    <a href="#faq">FAQ</a>
+    <a href="#changelog">Changelog</a>
+    <a href="#support">Support</a>
+  </nav>
+</aside>
+
+<!-- ═══════════════════════════════════════════════════════════
+     MAIN CONTENT
+════════════════════════════════════════════════════════════ -->
+<main class="content">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-tag">Android App · Kotlin + Compose</div>
+    <h1>VisionCut</h1>
+    <p>AI-powered video background remover for Android. Built with Jetpack Compose, ML Kit, RevenueCat, and AdMob — everything you need to ship a polished freemium app.</p>
+    <div class="hero-meta">
+      <span>📱 <strong>Android 8.0+</strong></span>
+      <span>🎯 <strong>Target SDK 34</strong></span>
+      <span>🔤 <strong>Kotlin</strong></span>
+      <span>🎨 <strong>Jetpack Compose</strong></span>
+      <span>🌙 <strong>Dark Mode Ready</strong></span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       INTRODUCTION
+  ════════════════════════════════════════════════════════ -->
+  <section id="introduction">
+    <h2>Introduction</h2>
+    <p>
+      <strong>VisionCut</strong> is a production-ready Android application that uses on-device AI to remove the background from any video in real time. Users select a video, choose a background mode (green screen or transparent), optionally trim the clip, then export or share the result — all without sending data to a server.
+    </p>
+    <p>
+      The app is built on a fully documented, modular codebase using the latest Android best practices: Jetpack Compose UI, Coroutines + StateFlow for reactive state, RevenueCat for subscription management, and AdMob for monetization.
+    </p>
+
+    <div class="screenshots">
+      <div class="screenshot-frame">
+        <div class="img-placeholder"><span class="icon">🏠</span>Home Screen</div>
+        <div class="cap">Home</div>
+      </div>
+      <div class="screenshot-frame">
+        <div class="img-placeholder"><span class="icon">✂️</span>Remove BG Screen</div>
+        <div class="cap">Remove BG</div>
+      </div>
+      <div class="screenshot-frame">
+        <div class="img-placeholder"><span class="icon">📤</span>Export Screen</div>
+        <div class="cap">Export</div>
+      </div>
+      <div class="screenshot-frame">
+        <div class="img-placeholder"><span class="icon">👑</span>Premium Screen</div>
+        <div class="cap">Premium</div>
+      </div>
+      <div class="screenshot-frame">
+        <div class="img-placeholder"><span class="icon">⚙️</span>Settings Screen</div>
+        <div class="cap">Settings</div>
+      </div>
+    </div>
+
+    <h3>Key Features</h3>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🤖</div>
+        <h4>On-device AI Segmentation</h4>
+        <p>ML Kit Selfie Segmentation with morphological edge cleaning and Gaussian feathering.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">✂️</div>
+        <h4>Video Trimmer</h4>
+        <p>Visual trim bar with frame thumbnail preview. Set start and end points before processing.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🟩</div>
+        <h4>Green Screen Export</h4>
+        <p>Export as MP4 with a solid green background, ready for chroma-keying in any editor.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌀</div>
+        <h4>Transparent Export</h4>
+        <p>Export as MOV with a fully transparent background for direct compositing.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">👑</div>
+        <h4>RevenueCat Premium</h4>
+        <p>Subscription paywall with purchase, restore, and offline detection built in.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📢</div>
+        <h4>AdMob Integration</h4>
+        <p>Rewarded interstitial (process) and rewarded (export/share) ads for free users.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌙</div>
+        <h4>Dark Mode Support</h4>
+        <p>Full light/dark theme support via Material 3. All colors change automatically.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <h4>On-device Processing</h4>
+        <p>No video ever leaves the device. All AI runs locally with ML Kit.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📥</div>
+        <h4>Gallery Save &amp; Share</h4>
+        <p>Saves to device gallery using MediaStore API. Share via any installed app.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       WHAT'S INCLUDED
+  ════════════════════════════════════════════════════════ -->
+  <section id="whats-included">
+    <h2>What's Included</h2>
+    <table>
+      <thead><tr><th>Item</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>📁 Full Android source code</td><td>Kotlin + Jetpack Compose, documented and production-ready</td></tr>
+        <tr><td>📄 This documentation</td><td>Step-by-step setup, configuration, and customization guide</td></tr>
+        <tr><td>🎨 Theme system</td><td>Color.kt, Theme.kt, Type.kt — one file to change the entire look</td></tr>
+        <tr><td>📦 Gradle build files</td><td>Pre-configured with all required dependencies</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout note">
+      <span class="callout-icon">ℹ️</span>
+      <strong>Not included</strong>
+      App icon, screenshots, and marketing assets are not included — these are specific to your brand. A list of required image assets is provided in the Customization section.
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       REQUIREMENTS
+  ════════════════════════════════════════════════════════ -->
+  <section id="requirements">
+    <h2>Requirements</h2>
+    <table>
+      <thead><tr><th>Requirement</th><th>Minimum</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>Android Studio</td><td>Hedgehog (2023.1.1) or later</td><td><span class="badge required">Required</span></td></tr>
+        <tr><td>Android SDK</td><td>API 26 (Android 8.0 Oreo)</td><td><span class="badge required">Required</span></td></tr>
+        <tr><td>Target SDK</td><td>API 34 (Android 14)</td><td><span class="badge required">Required</span></td></tr>
+        <tr><td>Kotlin</td><td>1.9+</td><td><span class="badge required">Required</span></td></tr>
+        <tr><td>Google AdMob Account</td><td>Any</td><td><span class="badge required">Required</span></td></tr>
+        <tr><td>RevenueCat Account</td><td>Free tier is sufficient</td><td><span class="badge required">Required</span></td></tr>
+        <tr><td>Google Play Developer Account</td><td>For publishing</td><td><span class="badge optional">For Publishing</span></td></tr>
+        <tr><td>Java (JDK)</td><td>JDK 17</td><td><span class="badge required">Required</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       INSTALLATION
+  ════════════════════════════════════════════════════════ -->
+  <section id="installation">
+    <h2>Installation</h2>
+
+    <h3>Step 1 — Open in Android Studio</h3>
+    <ol class="steps">
+      <li>Extract the downloaded ZIP file to a folder on your machine.</li>
+      <li>Open <strong>Android Studio</strong> → <strong>File → Open</strong> → select the extracted folder.</li>
+      <li>Wait for Gradle to sync. This downloads all dependencies (may take a few minutes on first run).</li>
+      <li>Once synced, connect an Android device or start an emulator (API 26+).</li>
+      <li>Press the <strong>▶ Run</strong> button. The app will build and install.</li>
+    </ol>
+
+    <div class="callout warn">
+      <span class="callout-icon">⚠️</span>
+      <strong>Before running:</strong> The app requires AdMob and RevenueCat to be configured (see sections below). Running without them will cause a crash at launch.
+    </div>
+
+    <h3>Step 2 — Change Package Name</h3>
+    <p>The default package name is <code>com.devx.VisionCut</code>. You <strong>must</strong> rename it to your own before publishing.</p>
+
+    <ol class="steps">
+      <li>In Android Studio, open <strong>app/build.gradle</strong> and update <code>applicationId</code>.</li>
+      <li>Right-click the <code>com.devx.VisionCut</code> package in the project tree → <strong>Refactor → Rename</strong> → rename each segment.</li>
+      <li>Update <code>android:authorities</code> in <code>AndroidManifest.xml</code> to match your new package name (used by FileProvider).</li>
+      <li>Sync Gradle again after making changes.</li>
+    </ol>
+
+    <div class="pre-label">app/build.gradle</div>
+    <pre><code><span class="kw">android</span> {
+    <span class="kw">defaultConfig</span> {
+        applicationId <span class="str">"com.yourcompany.yourappname"</span>  <span class="cmt">// ← change this</span>
+        minSdk <span class="num">26</span>
+        targetSdk <span class="num">34</span>
+        versionCode <span class="num">1</span>
+        versionName <span class="str">"1.0"</span>
+    }
+}</code></pre>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       ADMOB
+  ════════════════════════════════════════════════════════ -->
+  <section id="admob">
+    <h2>AdMob Configuration</h2>
+    <p>
+      The app uses two ad formats: a <strong>Rewarded Interstitial</strong> ad on the "Remove Background" screen (free users must watch to process), and a <strong>Rewarded</strong> ad on the Export screen (to share or save).
+    </p>
+
+    <h3>1 — Create Your AdMob App</h3>
+    <ol class="steps">
+      <li>Go to <a href="https://admob.google.com" target="_blank">admob.google.com</a> and sign in.</li>
+      <li>Click <strong>Apps → Add App</strong>. Select Android, enter your app name.</li>
+      <li>Copy the <strong>App ID</strong> (format: <code>ca-app-pub-XXXXXXXX~YYYYYY</code>).</li>
+    </ol>
+
+    <h3>2 — Add App ID to Manifest</h3>
+
+    <div class="pre-label">AndroidManifest.xml</div>
+    <pre><code><span class="kw">&lt;application&gt;</span>
+    <span class="kw">&lt;meta-data</span>
+        android:name=<span class="str">"com.google.android.gms.ads.APPLICATION_ID"</span>
+        android:value=<span class="str">"ca-app-pub-XXXXXXXX~YYYYYY"</span> <span class="cmt">/&gt;</span>  <span class="cmt">← your App ID</span>
+<span class="kw">&lt;/application&gt;</span></code></pre>
+
+    <h3>3 — Create Ad Units</h3>
+    <p>In AdMob, create two ad units for your app:</p>
+    <table>
+      <thead><tr><th>Ad Unit</th><th>Format</th><th>File to Update</th></tr></thead>
+      <tbody>
+        <tr><td>Remove BG Ad</td><td>Rewarded Interstitial</td><td><code>InterstitialAdManager.kt</code></td></tr>
+        <tr><td>Export/Share Ad</td><td>Rewarded</td><td><code>RewardedAdManager.kt</code></td></tr>
+      </tbody>
+    </table>
+
+    <h3>4 — Replace Test IDs</h3>
+    <p>Open each ad manager and replace the <code>AD_UNIT_ID</code> constant:</p>
+
+    <div class="pre-label">ads/InterstitialAdManager.kt</div>
+    <pre><code><span class="kw">companion object</span> {
+    <span class="kw">private const val</span> <span class="fn">AD_UNIT_ID</span> = <span class="str">"ca-app-pub-XXXXXXXX/YYYYYY"</span>  <span class="cmt">← your real ID</span>
+}</code></pre>
+
+    <div class="pre-label">ads/RewardedAdManager.kt</div>
+    <pre><code><span class="kw">companion object</span> {
+    <span class="kw">private const val</span> <span class="fn">AD_UNIT_ID</span> = <span class="str">"ca-app-pub-XXXXXXXX/ZZZZZZ"</span>  <span class="cmt">← your real ID</span>
+}</code></pre>
+
+    <div class="callout ok">
+      <span class="callout-icon">✅</span>
+      <strong>Test IDs are safe during development</strong>
+      The current code uses Google's official test ad unit IDs. They show real ads from the test network and won't generate revenue or policy violations. Replace them only when you are ready to publish.
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       REVENUECAT
+  ════════════════════════════════════════════════════════ -->
+  <section id="revenuecat">
+    <h2>RevenueCat (Premium) Configuration</h2>
+    <p>
+      VisionCut uses <a href="https://www.revenuecat.com" target="_blank">RevenueCat</a> to manage the premium subscription. The paywall UI is rendered by RevenueCat's official Compose SDK — you design it entirely in the RevenueCat dashboard, no code changes needed.
+    </p>
+
+    <h3>1 — Create a RevenueCat Project</h3>
+    <ol class="steps">
+      <li>Sign up at <a href="https://app.revenuecat.com" target="_blank">app.revenuecat.com</a>.</li>
+      <li>Create a new project and add an <strong>Android app</strong>.</li>
+      <li>Copy your <strong>Public SDK Key</strong> (starts with <code>goog_</code> for Google Play).</li>
+    </ol>
+
+    <h3>2 — Set Your API Key</h3>
+
+    <div class="pre-label">MyApp.kt</div>
+    <pre><code><span class="cls">Purchases</span>.<span class="fn">configure</span>(
+    <span class="cls">PurchasesConfiguration</span>.<span class="cls">Builder</span>(
+        context = <span class="kw">this</span>,
+        apiKey  = <span class="str">"goog_your_real_key_here"</span>  <span class="cmt">← replace this</span>
+    ).build()
+)</code></pre>
+
+    <div class="callout warn">
+      <span class="callout-icon">⚠️</span>
+      <strong>Security:</strong> Do not commit your real API key to a public git repository. Store it in <code>local.properties</code> and read it via <code>BuildConfig</code>. See the <a href="#api-key-security">API Key Security</a> section for instructions.
+    </div>
+
+    <h3>3 — Create an Entitlement</h3>
+    <ol class="steps">
+      <li>In the RevenueCat dashboard, go to <strong>Entitlements → New Entitlement</strong>.</li>
+      <li>Set the <strong>Identifier</strong> to exactly: <code>premium</code>
+        <br/><small>This must match the key used in <code>PremiumViewModel.kt</code>.</small></li>
+      <li>Attach your Google Play subscription product to this entitlement.</li>
+    </ol>
+
+    <h3>4 — Design Your Paywall</h3>
+    <p>
+      The paywall UI is fully managed by RevenueCat's dashboard — no Kotlin code changes needed. Go to <strong>Paywalls</strong> in the RevenueCat dashboard and use the visual editor to set your pricing, images, and copy.
+    </p>
+
+    <div class="callout note">
+      <span class="callout-icon">ℹ️</span>
+      <strong>Entitlement key:</strong> If you want to rename <code>"premium"</code> to something else, update it in <code>PremiumViewModel.kt</code> in the <code>handleCustomerInfo()</code> function: <code>customerInfo.entitlements["your_key"]</code>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       FILEPROVIDER
+  ════════════════════════════════════════════════════════ -->
+  <section id="fileprovider">
+    <h2>FileProvider Setup</h2>
+    <p>FileProvider is used to safely share exported video files with other apps (WhatsApp, Gmail, etc.) on Android 7.0+. It is already pre-configured in the source — just make sure the authority matches your package name.</p>
+
+    <div class="pre-label">AndroidManifest.xml</div>
+    <pre><code><span class="kw">&lt;provider</span>
+    android:name=<span class="str">"androidx.core.content.FileProvider"</span>
+    android:authorities=<span class="str">"com.yourpackage.fileprovider"</span>  <span class="cmt">← must match package</span>
+    android:exported=<span class="str">"false"</span>
+    android:grantUriPermissions=<span class="str">"true"</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;meta-data</span>
+        android:name=<span class="str">"android.support.FILE_PROVIDER_PATHS"</span>
+        android:resource=<span class="str">"@xml/file_paths"</span> <span class="kw">/&gt;</span>
+<span class="kw">&lt;/provider&gt;</span></code></pre>
+
+    <div class="pre-label">res/xml/file_paths.xml</div>
+    <pre><code><span class="kw">&lt;paths&gt;</span>
+    <span class="kw">&lt;files-path</span> name=<span class="str">"internal"</span> path=<span class="str">"."</span> <span class="kw">/&gt;</span>
+<span class="kw">&lt;/paths&gt;</span></code></pre>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       API KEY SECURITY
+  ════════════════════════════════════════════════════════ -->
+  <section id="api-key-security">
+    <h2>API Key Security</h2>
+    <p>Keeping your RevenueCat API key out of version control is important. Here is the recommended approach:</p>
+
+    <ol class="steps">
+      <li>Add your key to <code>local.properties</code> (this file is git-ignored by default):
+        <pre><code>REVENUECAT_API_KEY=goog_your_real_key_here</code></pre>
+      </li>
+      <li>Read it in <code>app/build.gradle</code>:
+<pre><code><span class="kw">def</span> localProps = <span class="kw">new</span> <span class="cls">Properties</span>()
+localProps.load(<span class="kw">new</span> <span class="cls">FileInputStream</span>(rootProject.file(<span class="str">"local.properties"</span>)))
+
+<span class="kw">android</span> {
+    <span class="kw">defaultConfig</span> {
+        buildConfigField <span class="str">"String"</span>, <span class="str">"RC_API_KEY"</span>,
+            <span class="str">"\"${localProps['REVENUECAT_API_KEY']}\""</span>
+    }
+}</code></pre>
+      </li>
+      <li>Use it in <code>MyApp.kt</code>:
+        <pre><code>apiKey = BuildConfig.RC_API_KEY</code></pre>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       THEMING
+  ════════════════════════════════════════════════════════ -->
+  <section id="theming">
+    <h2>Colors &amp; Theme</h2>
+    <p>All app colors are defined in a single file: <code>ui/theme/Color.kt</code>. Change any value here and it updates everywhere automatically. Dark mode is fully supported — define a light and dark value for each color.</p>
+
+    <div class="pre-label">ui/theme/Color.kt — change your brand color</div>
+    <pre><code><span class="cmt">// ── Brand primary — change this one line to rebrand the app</span>
+<span class="kw">val</span> <span class="fn">BrandPurple</span>      = <span class="cls">Color</span>(<span class="num">0xFF6901FC</span>)  <span class="cmt">// light mode primary</span>
+<span class="kw">val</span> <span class="fn">BrandPurpleLight</span> = <span class="cls">Color</span>(<span class="num">0xFF9747FF</span>)  <span class="cmt">// dark mode primary</span></code></pre>
+
+    <p>The theme is applied in <code>MainActivity.kt</code> via <code>BGRemoverTheme</code>. To disable dynamic color (Android 12+ wallpaper tint) and always use your brand color:</p>
+
+    <div class="pre-label">MainActivity.kt</div>
+    <pre><code><span class="cls">BGRemoverTheme</span>(dynamicColor = <span class="kw">false</span>) {   <span class="cmt">// false = always use BrandPurple</span>
+    <span class="fn">AppNavigation</span>(viewModel = viewModel)
+}</code></pre>
+
+    <h3>Color Token Reference</h3>
+    <table>
+      <thead><tr><th>Token</th><th>Light Value</th><th>Used For</th></tr></thead>
+      <tbody>
+        <tr><td><code>BrandPurple</code></td><td>#6901FC</td><td>Buttons, icons, primary actions</td></tr>
+        <tr><td><code>BackgroundLight</code></td><td>#FFFFFF</td><td>Screen backgrounds</td></tr>
+        <tr><td><code>SurfaceLight</code></td><td>#FFFFFF</td><td>Cards, sheets</td></tr>
+        <tr><td><code>SurfaceVariantLight</code></td><td>#F5F6F8</td><td>Settings bg, toggle row, back button</td></tr>
+        <tr><td><code>OnSurfaceVariantLight</code></td><td>#6B6B6B</td><td>Muted / secondary text</td></tr>
+        <tr><td><code>PrimaryContainerLight</code></td><td>#F3F0FE</td><td>Icon backgrounds, badge backgrounds</td></tr>
+        <tr><td><code>OutlineVariantLight</code></td><td>#EEEEEE</td><td>Dividers</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       TYPOGRAPHY
+  ════════════════════════════════════════════════════════ -->
+  <section id="typography">
+    <h2>Typography</h2>
+    <p>All text styles are defined in <code>ui/theme/Type.kt</code>. To change any font size or weight app-wide, update the style here.</p>
+
+    <table>
+      <thead><tr><th>Style Token</th><th>Size</th><th>Weight</th><th>Used For</th></tr></thead>
+      <tbody>
+        <tr><td><code>headlineSmall</code></td><td>22sp</td><td>Bold</td><td>"VisionCut", "Settings"</td></tr>
+        <tr><td><code>titleLarge</code></td><td>20sp</td><td>Bold</td><td>Screen titles "Export Video"</td></tr>
+        <tr><td><code>titleMedium</code></td><td>16sp</td><td>SemiBold</td><td>"Remove Background"</td></tr>
+        <tr><td><code>titleSmall</code></td><td>14sp</td><td>SemiBold</td><td>Section labels "Background"</td></tr>
+        <tr><td><code>labelLarge</code></td><td>16sp</td><td>SemiBold</td><td>CTA button text</td></tr>
+        <tr><td><code>bodyMedium</code></td><td>13sp</td><td>Normal</td><td>Dialog descriptions</td></tr>
+        <tr><td><code>labelSmall</code></td><td>11sp</td><td>Medium</td><td>Badge text</td></tr>
+      </tbody>
+    </table>
+
+    <p>To use a custom font, add your <code>.ttf</code> files to <code>res/font/</code>, create a <code>FontFamily</code>, and replace <code>FontFamily.Default</code> in <code>Type.kt</code>.</p>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       APP NAME
+  ════════════════════════════════════════════════════════ -->
+  <section id="app-name">
+    <h2>App Name &amp; Package</h2>
+
+    <h3>Rename the App</h3>
+    <p>The visible app name "VisionCut" appears in two places:</p>
+    <table>
+      <thead><tr><th>Location</th><th>How to Change</th></tr></thead>
+      <tbody>
+        <tr><td>Launcher label</td><td><code>AndroidManifest.xml</code> → <code>android:label</code></td></tr>
+        <tr><td>Top bar in Home screen</td><td><code>HomeScreen.kt</code> → <code>Text("VisionCut")</code></td></tr>
+      </tbody>
+    </table>
+
+    <h3>Required Image Assets</h3>
+    <p>You will need to provide the following image assets (create them yourself or use a designer):</p>
+    <table>
+      <thead><tr><th>Asset</th><th>Size</th><th>Location</th></tr></thead>
+      <tbody>
+        <tr><td>App icon (launcher)</td><td>512×512 px</td><td><code>res/mipmap-*/</code> (use Image Asset Studio)</td></tr>
+        <tr><td>Adaptive icon foreground</td><td>108×108 dp</td><td><code>res/drawable/</code></td></tr>
+        <tr><td>Empty state illustration</td><td>Any (square)</td><td><code>res/drawable/empty_state_light.png</code></td></tr>
+        <tr><td>Empty state (dark mode)</td><td>Same as above</td><td><code>res/drawable/empty_state_dark.png</code> (optional)</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       FILE STRUCTURE
+  ════════════════════════════════════════════════════════ -->
+  <section id="file-structure">
+    <h2>File Structure</h2>
+
+    <div class="file-tree">
+<span class="dir">app/src/main/kotlin/com/devx/BGRemover/</span>
+│
+├── <span class="dir">ads/</span>
+│   ├── <span class="file">InterstitialAdManager.kt</span>   <span class="note">rewarded-interstitial for processing</span>
+│   └── <span class="file">RewardedAdManager.kt</span>       <span class="note">rewarded ad for export/share</span>
+│
+├── <span class="dir">navigation/</span>
+│   ├── <span class="file">AppNavigation.kt</span>           <span class="note">NavHost + all composable destinations</span>
+│   └── <span class="file">Screen.kt</span>                  <span class="note">sealed class with route strings</span>
+│
+├── <span class="dir">pipeline/</span>
+│   ├── <span class="file">AudioMuxer.kt</span>              <span class="note">mux audio from original into processed video</span>
+│   ├── <span class="file">FrameMaskApplier.kt</span>        <span class="note">composites foreground onto background</span>
+│   ├── <span class="file">SelfieSegmenter.kt</span>         <span class="note">ML Kit segmentation + edge cleaning</span>
+│   ├── <span class="file">VideoFrameDecoder.kt</span>       <span class="note">MediaCodec decode → Bitmap frames</span>
+│   ├── <span class="file">VideoFrameEncoder.kt</span>       <span class="note">Bitmap frames → H.264 via GLES/EGL</span>
+│   └── <span class="file">VideoProcessingPipeline.kt</span> <span class="note">orchestrates decode → segment → encode → mux</span>
+│
+├── <span class="dir">ui/</span>
+│   ├── <span class="dir">components/</span>
+│   │   ├── <span class="file">InterstitialAdManager.kt</span>
+│   │   ├── <span class="file">RewardedAdManager.kt</span>
+│   │   └── <span class="file">VideoTrimmerBar.kt</span>         <span class="note">draggable trim handles + thumbnail strip</span>
+│   ├── <span class="dir">screens/</span>
+│   │   ├── <span class="file">ExportScreen.kt</span>            <span class="note">video preview + share/export buttons</span>
+│   │   ├── <span class="file">HomeScreen.kt</span>              <span class="note">empty state + video picker</span>
+│   │   ├── <span class="file">PremiumScreen.kt</span>           <span class="note">full-screen RevenueCat paywall</span>
+│   │   ├── <span class="file">RemoveBGScreen.kt</span>          <span class="note">preview + trim + process button</span>
+│   │   └── <span class="file">SettingsScreen.kt</span>          <span class="note">upgrade card + support links</span>
+│   └── <span class="dir">theme/</span>
+│       ├── <span class="file">Color.kt</span>                   <span class="note">all brand + semantic color tokens</span>
+│       ├── <span class="file">Theme.kt</span>                   <span class="note">BGRemoverTheme() — light + dark schemes</span>
+│       └── <span class="file">Type.kt</span>                    <span class="note">full Material 3 typography scale</span>
+│
+├── <span class="dir">util/</span>
+│   ├── <span class="file">GalleryExporter.kt</span>         <span class="note">MediaStore save for Android 10+ and legacy</span>
+│   ├── <span class="file">NetworkUtils.kt</span>            <span class="note">isNetworkAvailable() check</span>
+│   └── <span class="file">PremiumConstants.kt</span>        <span class="note">shared premium/entitlement constants</span>
+│
+├── <span class="dir">viewmodel/</span>
+│   ├── <span class="file">MainViewModel.kt</span>           <span class="note">video selection, processing, sharing</span>
+│   ├── <span class="file">PremiumViewModel.kt</span>        <span class="note">RevenueCat status + paywall events</span>
+│   └── <span class="file">SettingsViewModel.kt</span>       <span class="note">share app, support email, rate app</span>
+│
+├── <span class="file">MainActivity.kt</span>            <span class="note">entry point, edge-to-edge, AdMob init</span>
+└── <span class="file">MyApp.kt</span>                   <span class="note">Application class, RevenueCat configure</span>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       NAVIGATION FLOW
+  ════════════════════════════════════════════════════════ -->
+  <section id="navigation-flow">
+    <h2>Navigation Flow</h2>
+    <p>The app uses Jetpack Navigation Compose with four destinations:</p>
+
+    <div class="pre-label">Back stack diagram</div>
+    <pre><code><span class="cmt">Normal flow:</span>
+  Home  ──▶  RemoveBG  ──▶  Export
+  [Back]      [Back]          [Back]
+  stays        goes            goes
+  on Home     to Home         to Home
+
+
+<span class="cmt">Premium flow (from any screen):</span>
+  Home  ──▶  Premium          (popBackStack → Home)
+  RemoveBG ─▶ Premium         (popBackStack → RemoveBG)
+
+
+<span class="cmt">Back button behavior:</span>
+  Export  → Back → resets selection + export → Home (stack cleared)
+  RemoveBG → Back → resets selection → Home (stack cleared)
+  Premium → Back → popBackStack (safe, Home always below)</code></pre>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       VIDEO PIPELINE
+  ════════════════════════════════════════════════════════ -->
+  <section id="pipeline">
+    <h2>Video Pipeline</h2>
+    <p>VisionCut processes video entirely on-device. Here is how each frame flows through the pipeline:</p>
+
+    <div class="pre-label">Processing steps per frame</div>
+    <pre><code><span class="num">1.</span> <span class="cls">VideoFrameDecoder</span>   — MediaCodec decodes MP4 → YUV frames → ARGB Bitmaps
+<span class="num">2.</span> <span class="cls">SelfieSegmenter</span>     — ML Kit produces a float confidence mask per pixel
+                       Erode → Dilate → Gaussian blur (edge feathering)
+<span class="num">3.</span> <span class="cls">FrameMaskApplier</span>    — composites foreground bitmap onto chosen background
+                       (solid color / transparent / blur / custom image)
+<span class="num">4.</span> <span class="cls">VideoFrameEncoder</span>   — uploads Bitmap → OpenGL texture → encodes via EGL surface
+                       MediaMuxer writes H.264 to temp .mp4
+<span class="num">5.</span> <span class="cls">AudioMuxer</span>          — copies trimmed audio from original into final output</code></pre>
+
+    <h3>Background Modes</h3>
+    <table>
+      <thead><tr><th>Mode</th><th>Output Format</th><th>Use Case</th></tr></thead>
+      <tbody>
+        <tr><td>Green (SolidColor #00C853)</td><td>MP4</td><td>Chroma-key in video editors</td></tr>
+        <tr><td>Transparent</td><td>MP4 with black fallback*</td><td>Direct compositing</td></tr>
+      </tbody>
+    </table>
+    <p><small>* MP4 cannot store alpha — transparent mode is converted to a black background in the output. To get true transparency, encode to MOV/WebM.</small></p>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       DEBUG BUILD
+  ════════════════════════════════════════════════════════ -->
+  <section id="debug-build">
+    <h2>Debug Build</h2>
+    <p>To run a debug build from Android Studio:</p>
+    <ol class="steps">
+      <li>Select the <strong>debug</strong> build variant in the Build Variants panel.</li>
+      <li>Connect a device or start an emulator (API 26+, ideally a real device for ML Kit accuracy).</li>
+      <li>Press <strong>▶ Run</strong>.</li>
+    </ol>
+
+    <div class="callout note">
+      <span class="callout-icon">ℹ️</span>
+      In debug builds, <code>Purchases.logLevel = LogLevel.DEBUG</code> is enabled automatically. RevenueCat logs will appear in Logcat under the <code>PremiumViewModel</code> tag. This is disabled automatically in release builds.
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       RELEASE BUILD
+  ════════════════════════════════════════════════════════ -->
+  <section id="release-build">
+    <h2>Release Build</h2>
+    <h3>1 — Generate a Keystore</h3>
+    <p>In Android Studio: <strong>Build → Generate Signed Bundle / APK → Android App Bundle → Create new keystore</strong>. Fill in the alias, passwords, and validity details. Store this file securely — losing it means you cannot update your app on the Play Store.</p>
+
+    <h3>2 — Configure Signing in Gradle</h3>
+    <div class="pre-label">app/build.gradle</div>
+    <pre><code><span class="kw">android</span> {
+    <span class="kw">signingConfigs</span> {
+        <span class="kw">release</span> {
+            storeFile     file(<span class="str">"path/to/your.keystore"</span>)
+            storePassword <span class="str">"your_store_password"</span>
+            keyAlias      <span class="str">"your_alias"</span>
+            keyPassword   <span class="str">"your_key_password"</span>
+        }
+    }
+    <span class="kw">buildTypes</span> {
+        <span class="kw">release</span> {
+            signingConfig       signingConfigs.release
+            minifyEnabled       <span class="kw">true</span>
+            shrinkResources     <span class="kw">true</span>
+            proguardFiles getDefaultProguardFile(<span class="str">'proguard-android-optimize.txt'</span>),
+                          <span class="str">'proguard-rules.pro'</span>
+        }
+    }
+}</code></pre>
+
+    <h3>3 — Build the Release AAB</h3>
+    <p><strong>Build → Generate Signed Bundle / APK → Android App Bundle → release</strong>. Upload the resulting <code>.aab</code> file to the Google Play Console.</p>
+
+    <div class="callout warn">
+      <span class="callout-icon">⚠️</span>
+      <strong>Before publishing:</strong> Replace all test ad unit IDs with your real AdMob IDs. Replace the RevenueCat test key with your production key. Remove or change the debug API key comment in <code>MyApp.kt</code>.
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       PROGUARD
+  ════════════════════════════════════════════════════════ -->
+  <section id="proguard">
+    <h2>ProGuard Rules</h2>
+    <p>Add these rules to your <code>proguard-rules.pro</code> to prevent release build crashes:</p>
+
+    <div class="pre-label">proguard-rules.pro</div>
+    <pre><code><span class="cmt"># RevenueCat</span>
+-keep class com.revenuecat.purchases.** { *; }
+
+<span class="cmt"># ML Kit</span>
+-keep class com.google.mlkit.** { *; }
+-keep class com.google.android.gms.** { *; }
+
+<span class="cmt"># AdMob</span>
+-keep class com.google.android.gms.ads.** { *; }
+
+<span class="cmt"># MediaCodec / EGL (video pipeline)</span>
+-keep class android.media.** { *; }
+-keep class android.opengl.** { *; }
+
+<span class="cmt"># Kotlin Coroutines</span>
+-keepnames class kotlinx.coroutines.internal.MainDispatcherFactory {}
+-keepnames class kotlinx.coroutines.CoroutineExceptionHandler {}</code></pre>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       FAQ
+  ════════════════════════════════════════════════════════ -->
+  <section id="faq">
+    <h2>Frequently Asked Questions</h2>
+
+    <h3>The app crashes at launch after I open it in Android Studio</h3>
+    <p>This almost always means AdMob or RevenueCat is not configured. Make sure you have added the AdMob App ID to <code>AndroidManifest.xml</code> and your RevenueCat API key to <code>MyApp.kt</code>, then clean and rebuild.</p>
+
+    <h3>ML Kit segmentation is slow on my test device</h3>
+    <p>ML Kit Selfie Segmentation in STREAM_MODE performs best on mid-range devices from 2020 onward. Processing speed is roughly 3–5x slower than real time on low-end devices. For testing, use a physical device rather than an emulator.</p>
+
+    <h3>The rewarded ad never shows — just spins</h3>
+    <p>During development, AdMob sometimes takes 30–60 seconds to serve the first test ad. Make sure you are using the official test ad unit IDs (already set in the source). If you switched to real IDs before getting AdMob approval, test ads won't serve.</p>
+
+    <h3>RevenueCat always shows isPremium = false even after purchasing</h3>
+    <p>Make sure the entitlement identifier in your RevenueCat dashboard is exactly <code>premium</code> (all lowercase, no spaces). This must match the key in <code>PremiumViewModel.kt</code>.</p>
+
+    <h3>The exported video has no audio</h3>
+    <p>Make sure <code>READ_MEDIA_VIDEO</code> (Android 13+) or <code>READ_EXTERNAL_STORAGE</code> (Android 12 and below) permissions are granted. The audio muxer reads audio directly from the original video file using <code>MediaExtractor</code>.</p>
+
+    <h3>How do I change the app language / add translations?</h3>
+    <p>All user-visible strings are hardcoded in the composables. To add localisation, move them to <code>res/values/strings.xml</code> and reference via <code>stringResource(R.string.key)</code>. Create <code>res/values-XX/strings.xml</code> for each locale.</p>
+
+    <h3>Can I add a custom background image instead of green screen?</h3>
+    <p>Yes — <code>FrameMaskApplier.BackgroundMode.Image(bitmap)</code> is already implemented. Add a UI control in <code>RemoveBGScreen.kt</code> to let the user pick a photo, then pass it to <code>viewModel.setBackgroundMode(Image(bitmap))</code>.</p>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       CHANGELOG
+  ════════════════════════════════════════════════════════ -->
+  <section id="changelog">
+    <h2>Changelog</h2>
+
+    <div class="changelog-entry">
+      <div class="changelog-header">
+        <span class="changelog-version">v1.0.0</span>
+        <span class="changelog-date">Initial Release</span>
+        <span class="changelog-tag">Latest</span>
+      </div>
+      <div class="changelog-body">
+        <ul>
+          <li><strong>Initial release</strong> — full production-ready source code</li>
+          <li><strong>ML Kit Selfie Segmentation</strong> with morphological edge cleaning</li>
+          <li><strong>Video trimmer</strong> with draggable handles and frame previews</li>
+          <li><strong>RevenueCat paywall</strong> integration with purchase + restore</li>
+          <li><strong>AdMob rewarded interstitial + rewarded</strong> ad integration</li>
+          <li><strong>Green screen (MP4) and transparent export</strong> modes</li>
+          <li><strong>Dark mode</strong> support via Material 3 theme system</li>
+          <li><strong>Gallery save</strong> via MediaStore (Android 10+) and legacy fallback</li>
+          <li><strong>FileProvider</strong> for safe video sharing with other apps</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SUPPORT
+  ════════════════════════════════════════════════════════ -->
+  <section id="support">
+    <h2>Support</h2>
+    <p>
+      If you have any questions about setup or customization that aren't covered in this documentation, please reach out via the <strong>Comments</strong> section on the CodeCanyon item page. We aim to respond within 48 hours on business days.
+    </p>
+
+    <div class="callout note">
+      <span class="callout-icon">ℹ️</span>
+      <strong>What support covers:</strong> questions about the code as delivered, help with configuration steps described in this documentation, and bug reports for issues present in the original source code.
+      <br/><br/>
+      <strong>What support does not cover:</strong> custom feature development, changes to app design, or issues caused by third-party library updates after the purchase date.
+    </div>
+
+    <h3>Before Submitting a Support Request</h3>
+    <ol class="steps">
+      <li>Read this documentation fully, especially the FAQ section.</li>
+      <li>Check the LogCat output in Android Studio — most issues print a clear error message.</li>
+      <li>Make sure Gradle sync completed without errors.</li>
+      <li>Verify your AdMob and RevenueCat keys are correctly placed.</li>
+    </ol>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>VisionCut Documentation · v1.0.0</p>
+    <p style="margin-top:6px;">Built with Kotlin · Jetpack Compose · ML Kit · RevenueCat · AdMob</p>
+  </footer>
+
+</main>
+</div>
+
+<script>
+  // Highlight active sidebar link on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const links    = document.querySelectorAll('.sidebar nav a');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector(`.sidebar nav a[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -75% 0px' });
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>

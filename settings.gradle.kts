@@ -22,6 +22,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "test app"
+rootProject.name = "Vision Cut"
 include(":app")
  

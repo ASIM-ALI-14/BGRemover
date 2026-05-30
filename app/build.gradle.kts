@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.devx.BGRemover"
+    namespace = "com.devx.VisionCut"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.devx.BGRemover"
+        applicationId = "com.devx.VisionCut"
         minSdk = 24
         targetSdk = 36
         versionCode = 1
@@ -48,6 +48,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
