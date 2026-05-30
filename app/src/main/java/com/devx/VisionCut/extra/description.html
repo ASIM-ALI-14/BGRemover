@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VisionCut Description</title>
+  </head>
+  <body>
+
+    <h2>VisionCut – AI Video Background Remover Android App</h2>
+    <p>
+      Introducing VisionCut, a fully production-ready Android application that uses on-device
+      AI to remove the background from any video in real time — no internet connection required,
+      no server uploads, no green screen needed. Built with Kotlin, Jetpack Compose, and
+      Google ML Kit Selfie Segmentation, VisionCut delivers clean, professional background
+      removal directly on the device. The app includes a built-in video trimmer, multiple
+      background modes (green screen or transparent WebM), a processed video library, and a
+      complete freemium monetization system using RevenueCat subscriptions and AdMob ads.
+      Whether you're building a content creation tool, a video editing suite, or a social media
+      app, VisionCut is the perfect ready-to-ship foundation.
+    </p>
+
+    <h2>Key Features</h2>
+    <ul>
+      <li>On-device AI background removal using Google ML Kit Selfie Segmentation</li>
+      <li>Morphological edge cleaning + Gaussian feathering for natural-looking results</li>
+      <li>Built-in video trimmer with draggable handles and frame preview</li>
+      <li>Green screen export (MP4) — ready for chroma-key in any video editor</li>
+      <li>Transparent export (WebM with real alpha channel) via FFmpeg-kit</li>
+      <li>Processed video library — browse, play, share, and delete your exports</li>
+      <li>Full-screen in-app video player with gradient overlay controls</li>
+      <li>Gallery save using MediaStore API (Android 10+ and legacy support)</li>
+      <li>Safe video sharing via FileProvider</li>
+      <li>Premium subscription paywall via RevenueCat with purchase and restore</li>
+      <li>AdMob Rewarded Interstitial ad (processing gate for free users)</li>
+      <li>AdMob Rewarded ad (export and share gate for free users)</li>
+      <li>No-internet dialog with premium upsell for offline users</li>
+      <li>Full dark mode support via Material 3 theme system</li>
+      <li>Clean architecture — ViewModel + StateFlow + Coroutines throughout</li>
+      <li>Fully documented, production-ready source code</li>
+    </ul>
+
+    <h2>Technical Stack</h2>
+
+    <h4>UI Technologies</h4>
+    <ul>
+      <li>Kotlin (100% — no Java)</li>
+      <li>Jetpack Compose (full declarative UI)</li>
+      <li>Material 3 design system with custom theme</li>
+      <li>Navigation Compose for multi-screen navigation</li>
+      <li>ExoPlayer (Media3) for in-app video playback</li>
+      <li>Jetpack Lifecycle + ViewModel</li>
+    </ul>
+
+    <h4>AI &amp; Video Processing</h4>
+    <ul>
+      <li>Google ML Kit Selfie Segmentation (on-device, no API key needed)</li>
+      <li>MediaCodec for hardware-accelerated video decoding and encoding</li>
+      <li>OpenGL ES 2.0 + EGL for GPU-based frame encoding</li>
+      <li>MediaMuxer for audio + video muxing</li>
+      <li>FFmpeg-kit for transparent WebM export (optional)</li>
+      <li>MediaMetadataRetriever + MediaExtractor for video metadata</li>
+    </ul>
+
+    <h4>Monetization &amp; Backend</h4>
+    <ul>
+      <li>RevenueCat SDK for subscription management and paywall UI</li>
+      <li>Google AdMob — Rewarded Interstitial + Rewarded ad formats</li>
+      <li>MediaStore API for gallery save (Android 10+ and legacy)</li>
+      <li>FileProvider for safe cross-app video sharing</li>
+    </ul>
+
+    <h2>App Requirements</h2>
+    <ul>
+      <li>Android Studio Hedgehog (2023.1.1) or later</li>
+      <li>Android SDK minimum API 26 (Android 8.0 Oreo)</li>
+      <li>Target SDK API 34 (Android 14)</li>
+      <li>Kotlin 1.9+</li>
+      <li>JDK 17</li>
+      <li>Google AdMob account (for ad unit IDs)</li>
+      <li>RevenueCat account (free tier is sufficient to start)</li>
+      <li>Google Play Developer account (for publishing)</li>
+    </ul>
+
+    <h2>What's Included</h2>
+    <ul>
+      <li>Full Android source code — Kotlin + Jetpack Compose, clean and documented</li>
+      <li>Complete theme system — change brand color in one file, updates everywhere</li>
+      <li>Full documentation — setup, configuration, customization, and build guide</li>
+      <li>AdMob integration guide — test IDs included, swap for real IDs before launch</li>
+      <li>RevenueCat integration guide — paywall design, entitlement setup, restore flow</li>
+      <li>ProGuard rules — pre-configured for all third-party libraries</li>
+      <li>Gradle build files — all dependencies pre-configured and ready to sync</li>
+    </ul>
+
+  </body>
+</html>
